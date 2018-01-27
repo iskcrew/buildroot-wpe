@@ -1,0 +1,56 @@
+#!/bin/sh
+
+HOSTNAME_FILE="/boot/hostname"
+NTP_CONF="/boot/ntp.conf"
+SSH_KEY="/boot/id_rsa.pub"
+
+start() {
+	echo "Setting up configuration"
+	echo "Installing watchdog module"
+	modprobe bcm2708_wdog
+	echo "Reboot on OOM"
+	sysctl -w vm.panic_on_oom=1
+	sysctl -w kernel.panic=10
+	mkdir /boot
+	mount -r /dev/mmcblk0p1 /boot
+        if [ -e "$HOSTNAME_FILE" ]; then
+                echo "Setting hostname"
+		HN=`head -1 $HOSTNAME_FILE`
+                hostname $HN
+        fi
+	if [ -e "$NTP_CONF" ]; then
+		echo "Copying ntp configuration"
+		cp $NTP_CONF /etc/ntp.conf
+	fi
+	if [ -e "$SSH_KEY" ]; then
+                echo "Copying ssh public key"
+		mkdir -p /root/.ssh
+                cp $SSH_KEY /root/.ssh/authorized_keys
+        fi
+}
+
+stop() {
+	true
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+	;;
+	restart|reload)
+		restart
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?
