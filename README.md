@@ -1,3 +1,10 @@
+# buildroot environment for ISK Rasberry pi displays
+
+This is a fork from https://github.com/WebPlatformForEmbedded/buildroot and is used to build the special wpe browser which offers hardware webgl on the pi. The original readme is bellow this section.
+
+To build the isk image for a pi clone this repository, install the build time dependencies listed bellow, `make rpi_isk_defconfig`, optionally customize with `make menuconfig`, build with `make` and then the needed files will be in `output/images/kernel-marked/zImage` for the kernel+ramdisk and `output/images/rpi-firmware` for the raspberry pi firmware. Place them into a sd card with fat format and you are ready to go. Refer to the isk README.md for configuration.
+
+
 [![Metrological Logo](https://www.metrological.com/images/logo2x.png)](http://www.metrological.com)
 
 Fast, light-weight, WebKit/Wayland based browser for embedded devices.
@@ -13,7 +20,7 @@ The Metrological buildroot is designed to configure, patch and build a WebKitFor
 The Metrological buildroot includes the WPE package which is hosted here:
 https://github.com/Metrological/WebKitForWayland
 
-The Metrological buildroot and Metrological WebKitForWayland forks contain changes, patches, new functionality that Metrological and partners added to comply to the latest MediaSource, Encrypted Media Extensions changes and new HTML5.x functionality specifically targeted for embedded devices. 
+The Metrological buildroot and Metrological WebKitForWayland forks contain changes, patches, new functionality that Metrological and partners added to comply to the latest MediaSource, Encrypted Media Extensions changes and new HTML5.x functionality specifically targeted for embedded devices.
 
 ## Getting started
 
@@ -30,7 +37,7 @@ Select a configuration for your embedded device from the `configs/` directory. F
 ```
 make raspberrypi2_wpe_defconfig
 ```
-Buildroot provides you a menuconfig option for the first time. Select additional packages if you require or exit and save the config. 
+Buildroot provides you a menuconfig option for the first time. Select additional packages if you require or exit and save the config.
 
 ### Build
 To build:
@@ -53,7 +60,7 @@ Additionally (by default) there is a WebInspector enabled which can be reached a
 http://<ip of your target machine>:9998/
 ```
 
-**Note** This requires a ES6 compatible browser. For example Safari nightly. 
+**Note** This requires a ES6 compatible browser. For example Safari nightly.
 
 ## Supported devices
 
